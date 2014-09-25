@@ -34,24 +34,24 @@ func NewCLI() *CLI {
 	return &CLI{}
 }
 
-func (c *CLI) addCommand(cmd Command) {
+func (c *CLI) AddCommand(cmd Command) {
 	c.cmd = cmd
 }
 
-func (c *CLI) addSubCommand(sub SubCommand) {
+func (c *CLI) AddSubCommand(sub SubCommand) {
 	c.subCmds[sub.Name()] = sub
 }
 
-func (c *CLI) hasCommand() bool {
+func (c *CLI) HasCommand() bool {
 	return c.cmd != nil
 }
 
-func (c *CLI) hasSubCommand() bool {
+func (c *CLI) HasSubCommand() bool {
 	return len(c.subCmds) > 0
 }
 
 func (c CLI) Run() {
-	if c.hasCommand() {
+	if c.HasCommand() {
 		cp := &Parser{cmd: c.cmd, fs: flag.NewFlagSet(os.Args[0], flag.ExitOnError)}
 		cp.cfg = c.cmd.DefineFlags(cp.fs)
 		cp.fs.Parse(os.Args)
